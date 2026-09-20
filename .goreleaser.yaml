@@ -47,7 +47,7 @@ nfpms:
     homepage: https://github.com/ThePandaOliver/envman-cli
     maintainer: Oliver Froberg <Oliver.h.froberg@gmail.com>
     description: An environment variable manager, written in Rust
-    license: MIT
+    license: GNU GPL-3.0
     formats:
       - deb
       - rpm
