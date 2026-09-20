@@ -1,10 +1,10 @@
+use anyhow::{Context, Result};
 use std::collections::BTreeMap;
 use std::fs;
 use std::path::Path;
-use anyhow::{Context, Result};
 
 pub struct EnvFile {
-    pub vars: BTreeMap<String, String>
+    pub vars: BTreeMap<String, String>,
 }
 
 impl EnvFile {
@@ -25,7 +25,7 @@ impl EnvFile {
                 }
             }
         }
-        
+
         Ok(Self { vars })
     }
 
@@ -38,8 +38,7 @@ impl EnvFile {
         for (k, v) in &self.vars {
             output.push_str(&format!("{}=\"{}\"\n", k, v));
         }
-        fs::write(path, output)
-            .with_context(|| format!("Failed to write to {:?}", path))?;
+        fs::write(path, output).with_context(|| format!("Failed to write to {:?}", path))?;
         Ok(())
     }
 }

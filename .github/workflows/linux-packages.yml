@@ -1,0 +1,36 @@
+name: Linux Packaging
+
+on:
+  push:
+    tags:
+      - 'v*'
+  # Allows you to trigger the workflow manually from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build & Package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      # If you are cross-compiling for ARM in your .goreleaser.yaml, add the target:
+      - name: Add ARM target
+        run: rustup target add aarch64-unknown-linux-gnu
+
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: "~> v2" # Uses GoReleaser v2
+          args: release --clean
+        env:
+          # This token is automatically provided by GitHub Actions
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

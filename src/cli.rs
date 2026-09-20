@@ -24,7 +24,7 @@ pub enum Commands {
     Get {
         key: String,
     },
-    Delete {
+    Unset {
         key: String,
     },
     List,
